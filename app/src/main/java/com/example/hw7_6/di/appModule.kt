@@ -6,7 +6,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { TaskViewModel(get()) }
-    single { UseCase(get()) }
-    includes(dataModule)
+    val appModule = listOf(
+        databaseModule,
+        viewModelModule,
+        repositoryModule,
+        useCaseModule
+    )
 }
