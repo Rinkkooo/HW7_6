@@ -29,19 +29,22 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
 
+    api(project(":data"))
     implementation(project(":domain"))
-    implementation(project(":data"))
-
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -53,14 +56,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Koin
-    implementation("io.insert-koin:koin-android:3.5.6")
+    implementation(libs.koin.android)
 
     //Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.8.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.8.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    //Room
+    ksp(libs.androidx.room.compiler)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    //ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }

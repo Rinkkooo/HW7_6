@@ -1,7 +1,7 @@
-package com.example.hw7_6.di
+package com.example.data.di
 
 import androidx.room.Room
-import com.example.data.AppDatabase
+import com.example.data.db.AppDatabase
 import org.koin.dsl.module
 
 val databaseModule = module {

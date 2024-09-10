@@ -1,4 +1,4 @@
-package com.example.hw7_6.ui.activity
+package com.example.hw7_6.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

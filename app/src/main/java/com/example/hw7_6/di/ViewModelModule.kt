@@ -1,9 +1,12 @@
 package com.example.hw7_6.di
 
-import com.example.hw7_6.ui.fragment.TaskViewModel
+import com.example.hw7_6.presentation.ui.fragment.taskCreate.TaskCreateViewModel
+import com.example.hw7_6.presentation.ui.fragment.taskList.TaskListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { TaskViewModel(get(), get(), get()) }
+    viewModel { TaskCreateViewModel(get()) }
+    viewModel { TaskListViewModel(get(), get(), get()) }
+
 }
