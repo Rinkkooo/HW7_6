@@ -5,6 +5,7 @@ import com.example.data.model.fromDomain
 import com.example.data.model.toDomain
 import com.example.domain.model.TaskEntityModel
 import com.example.domain.repository.TaskRepository
+import kotlinx.coroutines.flow.Flow
 
 class TaskRepositoryImpl(private val taskDao: TaskDao) : TaskRepository {
 
@@ -20,8 +21,10 @@ class TaskRepositoryImpl(private val taskDao: TaskDao) : TaskRepository {
         taskDao.deleteTask(taskId)
     }
 
-    override suspend fun fetchTask(): List<TaskEntityModel> {
-        return taskDao.fetchTasks().map { it.toDomain() }
+    override suspend fun fetchTask(): Flow<List<TaskEntityModel>> {
+        return taskDao.fetchTasks().map { taskList ->
+            taskList.map { it.toDomain() }
+        }
     }
 
 

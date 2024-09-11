@@ -43,8 +43,7 @@ android {
 
 dependencies {
 
-    api(project(":data"))
-    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -67,4 +66,7 @@ dependencies {
 
     //ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }

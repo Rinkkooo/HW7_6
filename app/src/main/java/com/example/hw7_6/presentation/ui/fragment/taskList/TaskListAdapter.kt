@@ -28,6 +28,18 @@ class TaskListAdapter : ListAdapter<TaskEntityUI, TaskListAdapter.ViewHolder>(Ta
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(taskEntityUI: TaskEntityUI) {
             binding.tvTaskName.text = taskEntityUI.taskName
+            binding.tvTaskDesc.text = taskEntityUI.taskDesc
+            binding.tvTaskTime.text = taskEntityUI.time.toString()
+
+        }
+
+        private fun formatTime(timeInMillis: Long): String {
+            val calendar = java.util.Calendar.getInstance().apply {
+                setTimeInMillis(timeInMillis)
+            }
+            val hour = calendar.get(java.util.Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(java.util.Calendar.MINUTE)
+            return String.format("%02d:%02d", hour, minute)
         }
     }
 }

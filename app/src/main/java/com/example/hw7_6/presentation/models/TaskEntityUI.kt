@@ -4,8 +4,10 @@ import com.example.domain.model.TaskEntityModel
 
 data class TaskEntityUI (
     val taskId: Int,
-    val taskName: String
+    val taskName: String,
+    val taskDesc: String,
+    val time: Int
 )
 
-fun TaskEntityModel.toUI() = TaskEntityUI(taskId, taskName)
-fun TaskEntityUI.fromDomain() = TaskEntityModel(taskId, taskName)
+fun TaskEntityModel.toUI() = TaskEntityUI(taskId, taskName, taskDesc, time)
+fun TaskEntityUI.fromDomain() = TaskEntityModel(taskId, taskName, taskDesc, time)

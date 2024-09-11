@@ -7,8 +7,10 @@ import com.example.domain.model.TaskEntityModel
 @Entity(tableName = "task_table")
 data class TaskEntityDto(
     @PrimaryKey(autoGenerate = true) val taskId: Int = 0,
-    val taskName: String
+    val taskName: String,
+    val taskDesc: String,
+    val time: Int,
 )
 
-fun TaskEntityDto.toDomain() = TaskEntityModel(taskId, taskName)
-fun TaskEntityModel.fromDomain() = TaskEntityDto(taskId, taskName)
+fun TaskEntityDto.toDomain() = TaskEntityModel(taskId, taskName, taskDesc, time )
+fun TaskEntityModel.fromDomain() = TaskEntityDto(taskId, taskName, taskDesc, time)
