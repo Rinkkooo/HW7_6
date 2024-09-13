@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hw7_6.databinding.ItemTaskBinding
 import com.example.hw7_6.presentation.models.TaskEntityUI
 
-class TaskListAdapter : ListAdapter<TaskEntityUI, TaskListAdapter.ViewHolder>(TaskDiffUtil) {
+class TaskListAdapter(private val onItemClick: (TaskEntityUI) -> Unit) :
+    ListAdapter<TaskEntityUI, TaskListAdapter.ViewHolder>(TaskDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -26,11 +27,16 @@ class TaskListAdapter : ListAdapter<TaskEntityUI, TaskListAdapter.ViewHolder>(Ta
 
     inner class ViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(taskEntityUI: TaskEntityUI) {
-            binding.tvTaskName.text = taskEntityUI.taskName
-            binding.tvTaskDesc.text = taskEntityUI.taskDesc
-            binding.tvTaskTime.text = taskEntityUI.time.toString()
 
+        fun onBind(taskEntityUI: TaskEntityUI) {
+            with(binding) {
+                tvTaskName.text = taskEntityUI.taskName
+                tvTaskDesc.text = taskEntityUI.taskDesc
+                tvTaskTime.text = formatTime(taskEntityUI.time)
+                root.setOnClickListener {
+                    onItemClick(taskEntityUI)
+                }
+            }
         }
 
         private fun formatTime(timeInMillis: Long): String {

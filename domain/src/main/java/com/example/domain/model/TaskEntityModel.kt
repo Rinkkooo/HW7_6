@@ -4,7 +4,7 @@ data class TaskEntityModel(
     val taskId: Int = -1,
     val taskName: String = "",
     val taskDesc: String = "",
-    val time: Int = -1
+    val time: Long = -1
 )
 
 

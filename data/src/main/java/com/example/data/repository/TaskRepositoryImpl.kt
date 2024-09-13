@@ -6,6 +6,7 @@ import com.example.data.model.toDomain
 import com.example.domain.model.TaskEntityModel
 import com.example.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TaskRepositoryImpl(private val taskDao: TaskDao) : TaskRepository {
 

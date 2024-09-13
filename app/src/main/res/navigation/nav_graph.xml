@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_taskListFragment_to_taskCreateFragment"
             app:destination="@id/taskCreateFragment" />
+        <action
+            android:id="@+id/action_taskListFragment_to_taskDetailFragment"
+            app:destination="@id/taskDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskDetailFragment"

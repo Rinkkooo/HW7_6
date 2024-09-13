@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.example.hw7_6.R
 import com.example.hw7_6.databinding.FragmentTaskDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -42,9 +40,9 @@ class TaskDetailFragment : Fragment() {
 
     }
 
-    private fun formatTime(time: Int): String {
+    private fun formatTime(time: Long): String {
         val calendar = Calendar.getInstance().apply {
-            timeInMillis = time.toLong() * 1000
+            timeInMillis = time * 1000
         }
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return dateFormat.format(calendar.time)

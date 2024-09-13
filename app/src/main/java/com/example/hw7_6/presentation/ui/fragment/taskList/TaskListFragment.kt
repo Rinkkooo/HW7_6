@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hw7_6.R
 import com.example.hw7_6.databinding.FragmentTaskListBinding
-import com.example.hw7_6.presentation.models.TaskEntityUI
-import com.example.hw7_6.presentation.models.toUI
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,7 +23,9 @@ class TaskListFragment : Fragment() {
 
     private val viewModel: TaskListViewModel by viewModel()
 
-    private val taskListAdapter = TaskListAdapter()
+    private val taskListAdapter = TaskListAdapter {
+        findNavController().navigate(R.id.action_taskListFragment_to_taskDetailFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,16 +41,47 @@ class TaskListFragment : Fragment() {
         setupFabClickListener()
         initFetchTask()
         setupSwipeToDelete()
-        setupObservers()
+        viewModel.fetchTasks()
+
+        binding.sortedList.setOnClickListener {
+            initFetchFilteredTask()
+        }
+        binding.sortedListByTime.setOnClickListener {
+            initFetchAndSortTask()
+        }
+    }
+
+    private fun initFetchFilteredTask() {
+
+        val filterDate = System.currentTimeMillis() - 86400000
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.fetchFilteredTasks { task ->
+                task.time > filterDate
+            }.collectLatest { filteredTask ->
+                taskListAdapter.submitList(filteredTask)
+            }
+        }
+    }
+
+    private fun initFetchAndSortTask() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.taskFlow.collectLatest { tasks ->
+                val sortedTasks = viewModel.sortTasksByTime(tasks)
+                taskListAdapter.submitList(sortedTasks)
+            }
+        }
     }
 
     private fun initFetchTask() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchTasks().collectLatest {
-                taskListAdapter.submitList(it.map { it.toUI() })
+            viewModel.taskFlow.collectLatest { newTasks ->
+                val updateList = taskListAdapter.currentList + newTasks
+                taskListAdapter.submitList(updateList)
             }
         }
     }
+
 
     private fun setupFabClickListener() {
         binding.btnCreateTask.setOnClickListener {
@@ -59,13 +89,6 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    private fun setupObservers() {
-        lifecycleScope.launch {
-            viewModel.fetchTasks().collect { taskList ->
-                taskListAdapter.submitList(taskList)
-            }
-        }
-    }
 
     private fun setupSwipeToDelete() {
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(

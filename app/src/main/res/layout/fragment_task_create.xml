@@ -7,18 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragment.taskCreate.TaskCreateFragment">
 
-    <!-- Task Description Input -->
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_desc"
+        android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task Description"
+        android:hint="Task Title"
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button to Pick Time -->
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_desc"
+        app:layout_constraintTop_toBottomOf="@id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task Description"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_pick_time"
         android:layout_width="match_parent"

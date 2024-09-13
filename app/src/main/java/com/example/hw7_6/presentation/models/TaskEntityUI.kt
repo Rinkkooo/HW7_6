@@ -6,7 +6,7 @@ data class TaskEntityUI (
     val taskId: Int,
     val taskName: String,
     val taskDesc: String,
-    val time: Int
+    val time: Long
 )
 
 fun TaskEntityModel.toUI() = TaskEntityUI(taskId, taskName, taskDesc, time)

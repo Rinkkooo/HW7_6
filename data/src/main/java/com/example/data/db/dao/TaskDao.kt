@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.data.model.TaskEntityDto
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
@@ -18,5 +19,5 @@ interface TaskDao {
     suspend fun deleteTask(taskId: Int)
 
     @Query("SELECT * FROM task_table")
-    suspend fun fetchTasks(): List<TaskEntityDto>
+    fun fetchTasks(): Flow<List<TaskEntityDto>>
 }
